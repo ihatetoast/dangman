@@ -1,3 +1,55 @@
-main {
-  background-color: rebeccapurple;
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  /* font-family:  */
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgb(65, 65, 65);
+}
+
+#game-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+#game-content {
+  flex: 1;
+}
+
+/* HEADER STYLES: */
+
+/* GAMEBOARD STYLES */
+#start {
+  background-color: rgb(191, 133, 248);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em 1.5em;
+}
+#start:hover {
+  cursor: pointer;
+}
+/* when disabled class is added, user cannot press start again */
+#start.disabled {
+  background-color: rgb(230, 210, 250);
+  pointer-events: none;
+}
+#gamedashes p span {
+  display: inline-block;
+  line-height: 2em;
+  margin: 1rem;
+  text-align: center;
+}
+
+/* FOOTER STYLES */
