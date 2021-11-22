@@ -34,13 +34,13 @@ const makeGameDashes = (str) => {
 
 const runGameFeature = (word) => {
   let guess = ''
-  let correct = false
+  let correct = false // try an isGameOver. what does correct mean? that the letter is in the word or that the word has been guessed?
 
   do {
     guess = prompt("Guess a letter of the word I'm thinking about?")
 
     if (guess === null) {
-      alert('The game as been aborted.')
+      alert('The game as been aborted.') // alerts are the worst. just have this in the console.
       return;
     }
 
@@ -53,9 +53,16 @@ const checkGuess = (word, guess) => {
 
   console.log('checkGuess', word)
   if(word.includes(guess)) {
-    correct = true
+    correct = true // this will stop the game loop, but all you're doing is saying that the letter is in the word. 
+    // this means the game is over once one letter is guessed. 
+    // how will you handle good guesses? maybe loop over the random word array with a forEach. 
+    // when the letter guessed === letter in the word, replace the dash in the array of dashes with the letter at the same index.
+    // ['p', 'i', 'e']  if user guesses i, then get the index (1)
+    // ['-', '-', '-'] and at index 1 here, replace dash with i so it becomes
+    // ['-', 'i', '-']
   } else {
     alert('Off with your head')
+    // how will you handle misses? keep track of bad guesses: head, torso,4 limbs = 5. when badguesses === 5, game is over (isGameOver = true or something)
   }
 }
 
