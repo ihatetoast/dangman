@@ -3,9 +3,14 @@ const WORDS_ARRAY = ["wheel", "zelda", "coffee", "muffin", "pizza"];
 const startBtn = document.querySelector("#start");
 const dashes = document.getElementById("gamedashes");
 
+let dashArr;
+let gameWord;
+let incorrectGuesses = 0;
+let isGameOver = false 
+
 // startGame called once. Should deactivate button
 const startGame = () => {
-  const gameWord = getWord();
+  gameWord = getWord();
   console.log("gameword is:");
   console.log(gameWord);
   // disable start button
@@ -17,17 +22,19 @@ startBtn.addEventListener("click", startGame);
 
 function getWord() {
   const targetIndex = Math.floor(Math.random() * WORDS_ARRAY.length);
-  const word = WORDS_ARRAY[targetIndex];
-  return word;
+  gameWord = WORDS_ARRAY[targetIndex].split("");
+  console.log(gameWord)
+  return gameWord;
 }
 
 // makeGameDashes once
-const makeGameDashes = (str) => {
+const makeGameDashes = (arr) => {
   let dashStr = "<p>";
-  const dashArr = str.split("").map((ltr) => " _ ");
-  dashArr.forEach((dash) => {});
-  dashArr.forEach((ltr, idx) => {
-    dashStr += '<span data-location="' + idx + '">' + ltr + "</span>";
+  dashArr = arr.map((ltr) => "_");
+  console.log(dashArr)
+  dashArr.forEach((dash, idx) => {
+    // dashStr += '<span data-location="' + idx + '">' + ltr + "</span>";
+    dashStr += `<span data-location="${idx}">${dash}</span>`
   });
   dashStr += "</p>";
   dashes.innerHTML = dashStr; 
@@ -35,35 +42,52 @@ const makeGameDashes = (str) => {
 
 const runGameFeature = (word) => {
   let guess = ''
-  let correct = false // try an isGameOver. what does correct mean? that the letter is in the word or that the word has been guessed?
 
   do {
     guess = prompt("Guess a letter of the word I'm thinking about?")
-
+    
     if (guess === null) {
       alert('The game has been aborted.')
       return;
     }
-
-    correct = checkGuess(word, guess)
-  } while(!correct)
+    checkGuess(word, guess)
+    confirmGameOver()
+  } while(!isGameOver)
 
 }
 
 const checkGuess = (word, guess) => {
-  let correct = false
   // console.log('checkGuess', word)
-
-  if(!word.includes(guess)) {
-    correct = true
+  if(word.includes(guess)) {
+    handleCorrectGuess(guess);
+    // makeGameDashes(dashArr)
+    console.log(dashArr);
   } else {
-    alert('Off with your head')
+    handleBadGuess();
     // how will you handle misses? keep track of bad guesses: head, torso,4 limbs = 5. when badguesses === 5, game is over (isGameOver = true or something)
   }
-
-  return correct;
 }
-
+const handleCorrectGuess = (guess) => {
+  gameWord.forEach((ltr, idx) => {
+    if(ltr === guess) {
+      dashArr[idx] = ltr
+    }
+  })
+}
+const handleBadGuess = () => {
+  incorrectGuesses++
+  console.log(incorrectGuesses)
+  //put bad guesses on the DOM
+}
+const confirmGameOver = () => {
+  if(incorrectGuesses === 6) {
+    isGameOver = true
+  } 
+  if(dashArr.indexOf("_") === -1) {
+    isGameOver = true
+  }
+  //clean up this
+}
 //get a random word
 //break word into single letter strings
 
@@ -72,3 +96,7 @@ const checkGuess = (word, guess) => {
 ////true if player gets right letter
 ////false if player gets wrong letter
 //Use do while loop 
+
+//change prompt to input field
+//render the dashes on their own to DOM 
+//in makeGameDashes function should only make dashes
