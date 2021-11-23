@@ -35,7 +35,7 @@ const makeGameDashes = (str) => {
 
 const runGameFeature = (word) => {
   let guess = ''
-  let correct = false
+  let correct = false // try an isGameOver. what does correct mean? that the letter is in the word or that the word has been guessed?
 
   do {
     guess = prompt("Guess a letter of the word I'm thinking about?")
@@ -58,6 +58,7 @@ const checkGuess = (word, guess) => {
     correct = true
   } else {
     alert('Off with your head')
+    // how will you handle misses? keep track of bad guesses: head, torso,4 limbs = 5. when badguesses === 5, game is over (isGameOver = true or something)
   }
 
   return correct;
